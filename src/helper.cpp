@@ -1,5 +1,6 @@
 #include "../libs/raylib/src/raylib.h"
 
+// Glue code for web build
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 EM_JS(int, canvasGetWidth, (), {
