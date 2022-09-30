@@ -31,17 +31,16 @@ void World::render() {
 }
 
 void World::update() {
+    // Update entities
+    for (auto i : this->ecs.entities()) {
+        i.second->update();
+    }
+
     // Update camera
-    //updateLookAtVectorFromMouse(camera.position, &camera.target);
     if (this->selectedEnitityID > -1) {
         auto entity = this->ecs.getEntityById(this->selectedEnitityID);
         camera.position = Vector3Add(entity->position, entity->head);
         camera.target = entity->lookat;
-    }
-
-    // Update entities
-    for (auto i : this->ecs.entities()) {
-        i.second->update();
     }
 }
 World::~World() {
