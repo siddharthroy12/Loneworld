@@ -5,7 +5,8 @@ GameScreen::GameScreen() {
 }
 
 void GameScreen::loop(Game *context) {
-    DrawText("GameScreen", 0, 0, 0, BLACK);
+    this->world.render();
+    this->world.update();
 }
 
 GameScreen::~GameScreen() {

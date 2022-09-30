@@ -21,6 +21,7 @@ void _loop() {
 
 int main(void) {
     // Setup window
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
 #if defined(PLATFORM_WEB)
     InitWindow(getBrowserWindowWidth(), getBrowserWindowHeight(), PROJECT_NAME);
 #else

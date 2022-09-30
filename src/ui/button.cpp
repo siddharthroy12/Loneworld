@@ -7,6 +7,7 @@ bool button(Game *context, std::string label, Vector2 position, Vector2 size) {
     rect.y = position.y;
     rect.height = size.y;
     rect.width = size.x;
+
     // Draw Border
     DrawRectangleLinesEx(rect, 2, BLACK);
 
@@ -20,7 +21,7 @@ bool button(Game *context, std::string label, Vector2 position, Vector2 size) {
         }
     }
 
-    // Draw lable
+    // Draw label
     Vector2 labelSize = MeasureTextEx(context->asset.font, label.c_str(), 20, 0);
     Vector2 center;
     center.x = rect.x + (rect.width/2.0) - (labelSize.x/2.0);

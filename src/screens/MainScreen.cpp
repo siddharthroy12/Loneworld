@@ -26,7 +26,6 @@ void MainScreen::loop(Game *context) {
     titlePosition.y = 100;
     DrawTextEx(context->asset.font, PROJECT_NAME, titlePosition, 40, 0, BLACK);
 
-
     // Start button
     Vector2 buttonPosition;
     buttonPosition.x = centerOfScreen.x - (BUTTON_WIDTH/2.0);
