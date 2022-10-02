@@ -4,8 +4,8 @@
 
 class MainScreen : public Screen {
     public:
-    MainScreen();
-    void loop(Game *context);
+    MainScreen(Game* context);
+    void loop();
     ~MainScreen();
 };
 

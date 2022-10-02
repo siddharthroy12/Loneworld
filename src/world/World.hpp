@@ -3,21 +3,32 @@
 
 #include "../../libs/raylib/src/raylib.h"
 #include "./entity/ECS.hpp"
-
-enum class CameraViewMode { FIRST_PERSON, THIRD_PERSON, THIRD_PERSON_FRONT };
+#include "../Game.hpp"
+#include "./chunk/Chunk.hpp"
+#include <thread>
+#include <unordered_map>
+#include <string>
+#include "WorldCamera.hpp"
 
 class World {
     public:
-    World();
+    World(Game *context);
     void render();
     void update();
     ~World();
     ECS ecs;
 
     private:
-    Camera camera;
-    CameraViewMode cameraMode;
-    int selectedEnitityID = 0;
+    std::unordered_map<std::string, Chunk> loadedChunks;
+    Game *context;
+    WorldCamera camera;
+    void handleChunkLoading();
+    void threadProcess();
+    bool threadRunning = true;
+    std::thread thread;
+    int followingEntity = 0;
+    bool pointVisible(Vector3 point);
+    bool boundingBoxVisible(BoundingBox box);
 };
 
 #endif

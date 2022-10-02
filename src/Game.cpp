@@ -7,7 +7,7 @@ Game::Game() {
     this->asset.font = LoadFontEx("assets/fonts/Monocraft.ttf", 40, nullptr, 0);
 
     // Set starting screen
-    this->currentScreen = std::unique_ptr<Screen>(new MainScreen());
+    this->currentScreen = std::unique_ptr<Screen>(new MainScreen(this));
 }
 
 void Game::loop() {
@@ -23,7 +23,7 @@ void Game::loop() {
     ClearBackground(RAYWHITE);
 
     // Run the current screen loop
-    this->currentScreen->loop(this);
+    this->currentScreen->loop();
     EndDrawing();
 
     // Handle the change of screen

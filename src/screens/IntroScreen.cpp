@@ -1,9 +1,9 @@
 #include "IntroScreen.hpp"
 
-IntroScreen::IntroScreen() {
+IntroScreen::IntroScreen(Game *context) : Screen(context) {
 }
 
-void IntroScreen::loop(Game *context) {
+void IntroScreen::loop() {
 }
 
 IntroScreen::~IntroScreen() {

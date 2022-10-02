@@ -7,11 +7,11 @@
 #define BUTTON_WIDTH 300
 #define BUTTON_HEIGHT 50
 
-MainScreen::MainScreen() {
+MainScreen::MainScreen(Game *context) : Screen(context) {
     std::cout << "Main Screen enter" << std::endl;
 }
 
-void MainScreen::loop(Game *context) {
+void MainScreen::loop() {
     // Get the center of screen
     Vector2 centerOfScreen;
     centerOfScreen.x = getWindowWidth() / 2.0;
@@ -37,7 +37,7 @@ void MainScreen::loop(Game *context) {
 
     if (button(context, "Start", buttonPosition, buttonSize)) {
         std::cout << "Start Clicked" << std::endl;
-        context->changeCurrentScreen(std::shared_ptr<Screen>(new GameScreen()));
+        context->changeCurrentScreen(std::shared_ptr<Screen>(new GameScreen(context)));
     }
 }
 

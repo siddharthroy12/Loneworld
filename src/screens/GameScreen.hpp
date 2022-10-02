@@ -3,14 +3,15 @@
 
 #include "../world/World.hpp"
 #include "Screen.hpp"
+#include <memory>
 
 class GameScreen : public Screen {
     public:
-        GameScreen();
-        void loop(Game *context);
+        GameScreen(Game *context);
+        void loop();
         ~GameScreen();
     private:
-        World world;
+        std::unique_ptr<World> world;
 };
 
 #endif

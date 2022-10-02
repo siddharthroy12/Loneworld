@@ -1,12 +1,14 @@
 #include "GameScreen.hpp"
+#include <memory>
 
-GameScreen::GameScreen() {
+GameScreen::GameScreen(Game* context) : Screen(context) {
     std::cout << "Game Screen enter" << std::endl;
+    this->world = std::unique_ptr<World>(new World(context));
 }
 
-void GameScreen::loop(Game *context) {
-    this->world.update();
-    this->world.render();
+void GameScreen::loop() {
+    this->world->update();
+    this->world->render();
 }
 
 GameScreen::~GameScreen() {

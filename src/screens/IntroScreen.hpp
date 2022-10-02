@@ -5,8 +5,8 @@
 
 class IntroScreen : public Screen {
     public:
-    IntroScreen();
-    void loop(Game *context);
+    IntroScreen(Game *context);
+    void loop();
     ~IntroScreen();
 };
 

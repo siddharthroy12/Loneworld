@@ -7,8 +7,11 @@ class Game;
 
 class Screen {
     public:
-        virtual void loop(Game *context) = 0;
-        virtual ~Screen() {}
+        Screen(Game *context);
+        virtual void loop() = 0;
+        virtual ~Screen();
+    protected:
+        Game *context;
 };
 
 #endif

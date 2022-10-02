@@ -3,14 +3,14 @@
 
 void updateLookAtVectorFromMouse(Vector3 position, Vector3 *lookat) {
     const Vector3 up = {0.0f, 1.0f, 0.0f};
-    Vector3 tmp = Vector3Subtract(*lookat, position);
+    Vector3 front = Vector3Subtract(*lookat, position);
     // Make the direction vector long so the calculation works correctly
-    tmp = Vector3Scale(Vector3Normalize(tmp), 10);
-    Vector3 left = Vector3Normalize(Vector3CrossProduct(up, tmp));
-    tmp = Vector3RotateByAxisAngle(tmp, up, GetMouseDelta().x*-0.01);
-    tmp = Vector3RotateByAxisAngle(tmp, left, GetMouseDelta().y*0.01);
-    tmp = Vector3Add(position, tmp);
-    *lookat = tmp;
+    front = Vector3Scale(Vector3Normalize(front), 10);
+    Vector3 left = Vector3Normalize(Vector3CrossProduct(up, front));
+    front = Vector3RotateByAxisAngle(front, up, GetMouseDelta().x*-0.01);
+    front = Vector3RotateByAxisAngle(front, left, GetMouseDelta().y*0.01);
+    front = Vector3Add(position, front);
+    *lookat = front;
 }
 
 Human::Human() {
