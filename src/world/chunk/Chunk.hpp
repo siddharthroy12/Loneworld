@@ -23,8 +23,12 @@ class Chunk {
     void draw();
     ~Chunk();
     ChunkPosition position = ChunkPosition(0, 0);
+    void updateMesh();
+    bool needsToUpdateMesh = false;
+    bool meshHasGenerated = false;
     BoundingBox getBoundingbox();
     private:
     int data[CHUNK_SIZE_XZ][CHUNK_SIZE_Y][CHUNK_SIZE_XZ];
+    Model model;
 };
 #endif

@@ -59,8 +59,8 @@ void World::render() {
     // Draw Chunks
     for (auto &pair : this->loadedChunks) {
         // Check if the chunk is visible
-        if (this->camera.boundingBoxVisible(pair.second.getBoundingbox())) {
-            pair.second.draw();
+        if (this->camera.boundingBoxVisible(pair.second->getBoundingbox()) && pair.second->meshHasGenerated) {
+            pair.second->draw();
         }
     }
 
@@ -72,7 +72,6 @@ void World::render() {
 }
 
 void World::update() {
-
     // Update entities
     for (auto i : this->ecs.entities()) {
         i.second->update();
@@ -84,9 +83,7 @@ void World::update() {
         camera.setPosition(Vector3Add(entity->position, entity->head));
         camera.setLookAt(entity->lookat);
     }
-}
 
-void World::handleChunkLoading() {
     // Get the camera's chunk position
     ChunkPosition cameraChunkPosition = worldPositionToChunk(camera.getPosition());
 
@@ -94,8 +91,8 @@ void World::handleChunkLoading() {
     std::vector<std::string> chunksToUnload;
 
     for (auto &pair : this->loadedChunks) {
-        auto outOfRangeX = std::abs((pair.second.position.x - cameraChunkPosition.x)) > this->context->settings.renderDistance;
-        auto outOfRangeZ = std::abs((pair.second.position.z - cameraChunkPosition.z)) > this->context->settings.renderDistance;
+        auto outOfRangeX = std::abs((pair.second->position.x - cameraChunkPosition.x)) > this->context->settings.renderDistance;
+        auto outOfRangeZ = std::abs((pair.second->position.z - cameraChunkPosition.z)) > this->context->settings.renderDistance;
 
         if (outOfRangeZ || outOfRangeX) {
             chunksToUnload.push_back(pair.first);
@@ -105,6 +102,18 @@ void World::handleChunkLoading() {
     for(auto &position : chunksToUnload) {
         this->loadedChunks.erase(position);
     }
+
+    // Update mesh of chunks
+    for (auto &pair : this->loadedChunks) {
+        if (pair.second->needsToUpdateMesh) {
+            pair.second->updateMesh();
+        }
+    }
+}
+
+void World::handleChunkLoading() {
+    // Get the camera's chunk position
+    ChunkPosition cameraChunkPosition = worldPositionToChunk(camera.getPosition());
 
     // Load chunk in render distance if not loaded
     ChunkPosition startChunkPosition = {
@@ -123,7 +132,8 @@ void World::handleChunkLoading() {
             auto chunkPositionString = chunkPosition.stringify();
             // If chunk is not loaded, load the chunk
             if (this->loadedChunks.find(chunkPositionString) == this->loadedChunks.end()) {
-                this->loadedChunks.insert(std::make_pair(chunkPositionString, Chunk(12, chunkPosition)));
+                std::shared_ptr<Chunk> chunk = std::shared_ptr<Chunk>(new Chunk(12, chunkPosition));
+                this->loadedChunks.insert(std::make_pair(chunkPositionString, chunk));
             }
         }
     }

@@ -5,6 +5,7 @@
 #include "./entity/ECS.hpp"
 #include "../Game.hpp"
 #include "./chunk/Chunk.hpp"
+#include <memory>
 #include <thread>
 #include <unordered_map>
 #include <string>
@@ -19,7 +20,7 @@ class World {
     ECS ecs;
 
     private:
-    std::unordered_map<std::string, Chunk> loadedChunks;
+    std::unordered_map<std::string, std::shared_ptr<Chunk>> loadedChunks;
     Game *context;
     WorldCamera camera;
     void handleChunkLoading();
